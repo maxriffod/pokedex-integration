@@ -1,27 +1,16 @@
-# gradle-getting-started
+# Pokedex-integratopm
 
-A barebones Gradle app, which can easily be deployed to Heroku.
+## Documentation with Swagger
 
-This application support the [Getting Started with Gradle on Heroku](https://devcenter.heroku.com/articles/getting-started-with-gradle-on-heroku) article - check it out.
-
-## Running Locally
-
-Make sure you have Java installed.  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/).
+Make sure you have Java installed. Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/).
 
 ```sh
-$ git clone https://github.com/heroku/gradle-getting-started.git
-$ cd gradle-getting-started
-$ ./gradlew stage
-$ heroku local web
+http://agile-oasis-75655.herokuapp.com/pokemon/api/swagger-ui/index.html?configUrl=/pokemon/api/v3/api-docs/swagger-config#/heroku-controller
 ```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+## Postman Collection
 
-If you're going to use a database, ensure you have a local `.env` file that reads something like this:
-
-```
-DATABASE_URL=postgres://localhost:5432/gradle_database_name
-```
+[Collection](resources/pokemon.postman_collection.json)
 
 ## Deploying to Heroku
 
@@ -30,9 +19,3 @@ $ heroku create
 $ git push heroku master
 $ heroku open
 ```
-
-## Documentation
-
-For more information about using Java on Heroku, see these Dev Center articles:
-
-- [Java on Heroku](https://devcenter.heroku.com/categories/java)
