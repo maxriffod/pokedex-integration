@@ -1,0 +1,70 @@
+buildscript {
+    ext {
+        springBootVersion = '2.4.0'
+        set('openApiVersion', '1.5.9')
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
+apply plugin: 'java-library'
+
+group = 'com.example'
+version = '1.0'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok'
+
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'io.github.openfeign:feign-httpclient'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.4.0'
+
+    api "org.springdoc:springdoc-openapi-ui:${openApiVersion}"
+    api 'org.springframework.boot:spring-boot-starter-actuator'
+
+
+    testImplementation "org.mockito:mockito-inline:2.7.+"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+    imports { mavenBom "org.springframework.cloud:spring-cloud-dependencies:2020.0.3" }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task unitTest(type: Test) {
+    useJUnitPlatform {
+        excludeTags 'integration-test'
+    }
+}
+
+jacocoTestReport {
+    getExecutionData().setFrom(fileTree(buildDir).include("/jacoco/*.exec"))
+    reports.xml.enabled true
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ['**/PokemonApplication.class'])
+        }))
+    }
+}
